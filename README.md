@@ -5,8 +5,8 @@
 apostrophe-instagram is a widget for the [Apostrophe](http://github.com/punkave/apostrophe) content management system. Apostrophe Instagram lets you display a feed of images from a users Instagram feed.
 
 ## TO-DO
-- [ ] Build it
-- [ ] Publish to NPM
+- [x] Build it
+- [x] Publish to NPM
 - [ ] Build some nice basic styles
 - [ ] Write some tests?
 
