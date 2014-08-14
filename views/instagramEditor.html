@@ -1,0 +1,28 @@
+{% extends "baseWidgetEditor.html" %}
+{% include "formMacros.html" %}
+
+{% block modalClass %}
+  {{ super() }} apos-instagram-editor
+{% endblock%}
+
+{% block modalLabel %}
+  {{ __('Select Instagram Username')}}
+{% endblock %}
+
+{% block modalInstructions %}
+  <p>{{ __("Enter your Instagram User's username below.")}}</p>
+{% endblock %}
+
+{% block formBody %}
+
+  <fieldset class="apos-fieldset apos-fieldset-text apos-fieldset-apos-instagram-username" data-name="instagramUsername">
+    <label>Instagram Username</label>
+    <input name="instagramUsername" type="text" class="apos-facebook-url">
+  </fieldset>
+
+  <fieldset class="apos-fieldset apos-fieldset-text apos-fieldset-apos-instagram-limit" data-name="instagramLimit">
+    <label>Number of Posts:</label>
+    <input name="instagramLimit" type="text" class="apos-input-narrow">
+  </fieldset>
+
+{% endblock %}

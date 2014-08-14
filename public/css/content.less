@@ -1,0 +1,90 @@
+/* ---------------------------------------------------------------*/
+/* ---------------------------------------------------------------*/
+// The Apostrophe Facebook Stock Styles
+/* ---------------------------------------------------------------*/
+/* ---------------------------------------------------------------*/
+
+// N.B. To remove these styles for your project, simply copy the template
+// and remove any classes in the template. Class are the CSS, data-attributes
+// are the JavaScript.
+
+.apos-facebook-loader
+{
+  display: block;
+  height: 50px;
+  width: 100%;
+  background: url('/modules/apos/images/spinner.gif') no-repeat center center;
+}
+
+.apos-facebook-post
+{
+  position: relative;
+  max-width: 720px; //The standard photo width;
+  display: block;
+  margin: 0 auto;
+}
+
+.apos-facebook-title
+{
+  display: inline-block;
+  width: 90%;
+  padding-left: 0 !important;
+}
+.apos-facebook-date
+{
+  display: inline-block;
+  width: 9%;
+  float: right; //To Catch the Title-less case
+}
+.apos-facebook-photo
+{
+
+}
+.apos-facebook-body
+{
+  padding: 15px 0 30px;
+  color: #666;
+}
+
+.apos-facebook-icon
+{
+  position: absolute;
+  right: 5px;
+  bottom: 20px;
+  color: #666;
+  &:before
+  {
+    font-size: 20px;
+  }
+}
+
+/* ---------------------------------------------------------------*/
+// The Type Styles
+/* ---------------------------------------------------------------*/
+.apos-facebook-post[data-post-type="link"]
+{
+  padding-bottom: 30px;
+
+  .apos-facebook-photo,
+  .apos-facebook-body
+  {
+    display: inline-block;
+    max-width: 68%;
+    vertical-align: top;
+    padding: 0;
+  }
+  .apos-facebook-photo
+  {
+    max-width: 30%;
+    margin-right: 1%;
+  }
+}
+
+.apos-facebook-post[data-post-type="photo"]
+{
+  img
+  {
+    display: block;
+    margin: 0 auto;
+  }
+}
