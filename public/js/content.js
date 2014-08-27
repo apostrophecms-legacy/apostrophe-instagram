@@ -53,7 +53,6 @@ apos.widgetPlayers.instagram = function($el) {
       }
 
       function generatePhotoMarkup(photos){
-        console.log(photos);
         _.each(photos, function(photo){
           //Clone our Template
           var $photo = cloneTemplate($photoTemplate);

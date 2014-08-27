@@ -30,7 +30,6 @@ function AposInstagramWidgetEditor(options) {
       self.data.limit = self.$limit.val();
       return getUserId(self.$userName.val(), callback);
     }
-    console.log("Should be done.");
 
   }
 
@@ -42,7 +41,6 @@ function AposInstagramWidgetEditor(options) {
       dataType: 'json',
       //data: {userName: userName},
       success: function(userId){
-        console.log("I'm getting done");
         self.data.user_id = userId;
         return callback();
       }

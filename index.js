@@ -116,7 +116,6 @@ function Construct(options, callback) {
     }
 
     return function(item) {
-      console.log("You made it to the server");
       // Now that we have the userId, let's go get some pictures.
       var feedRequestUrl = 'https://api.instagram.com/v1/users/'+userId+'/media/recent?client_id='+options.instagramId;
 
