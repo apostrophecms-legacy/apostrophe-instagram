@@ -90,6 +90,7 @@ apos.widgetPlayers.instagram = function($el) {
 
           //Add That to the List
           $photos.append($photo);
+          $photos.toggleClass('apos-template', false);
         });
         removeTemplate();
 
