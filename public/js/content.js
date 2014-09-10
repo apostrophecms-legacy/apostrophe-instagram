@@ -65,7 +65,7 @@ apos.widgetPlayers.instagram = function($el) {
           }
 
           // Add the caption.
-          if(photo.caption.text){
+          if(photo.caption && photo.caption.text){
             $photo.$caption.html(photo.caption.text);
           } else {
             $photo.$caption.remove();
