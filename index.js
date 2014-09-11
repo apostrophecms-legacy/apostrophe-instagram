@@ -60,7 +60,6 @@ function Construct(options, callback) {
 
   app.get('/apos-instagram/user/id', function(req, res) {
     var userName = apos.sanitizeString(req.query.userName);
-    console.log(userName);
     if (!userName.length) {
       res.statusCode = 404;
       console.log(chalk.red('[Apostrophe Instagram] ') + 'It looks like you forgot to enter a username');

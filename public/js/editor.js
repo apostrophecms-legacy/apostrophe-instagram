@@ -37,7 +37,7 @@ function AposInstagramWidgetEditor(options) {
 
     $.ajax({
       type: 'GET',
-      url: 'apos-instagram/user/id?userName='+userName,
+      url: '/apos-instagram/user/id?userName='+userName,
       dataType: 'json',
       //data: {userName: userName},
       success: function(userId){
