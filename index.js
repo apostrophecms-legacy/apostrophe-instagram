@@ -88,22 +88,24 @@ function Construct(options, callback) {
     });
   });
 
-
   app.get('/apos-instagram/photos', function(req, res) {
     var userId = apos.sanitizeString(req.query.id);
+    var tag = apos.sanitizeString(req.query.tag);
     var limit = apos.sanitizeString(req.query.limit);
 
-    if (!userId.length) {
+    if (!userId.length && !tag.length) {
       res.statusCode = 404;
-      console.log(chalk.red('[Apostrophe Instagram] ') + 'It looks like you forgot to enter a user ID');
+      console.log(chalk.red('[Apostrophe Instagram] ') + 'It looks like you forgot to enter a user ID or hashtag');
       return res.send('not found');
     }
 
-    if (_.has(instagramCache, userId)) {
-      var cache = instagramCache[userId];
+    var cacheName = (userId + tag || userId || tag);
+
+    if (_.has(instagramCache, cacheName)) {
+      var cache = instagramCache[cacheName];
       var now = (new Date()).getTime();
       if (now - cache.when > lifetime * 1000) {
-        delete instagramCache[userId];
+        delete instagramCache[cacheName];
       } else {
         return res.send(cache.results);
       }
@@ -116,7 +118,12 @@ function Construct(options, callback) {
 
     return function(item) {
       // Now that we have the userId, let's go get some pictures.
-      var feedRequestUrl = 'https://api.instagram.com/v1/users/'+userId+'/media/recent?client_id='+options.instagramId;
+      var feedRequestUrl;
+      if(tag.length){
+        feedRequestUrl = 'https://api.instagram.com/v1/tags/'+tag+'/media/recent?count=200&client_id='+options.instagramId;
+      } else if(userId.length && !tag.length){
+        feedRequestUrl = 'https://api.instagram.com/v1/users/'+userId+'/media/recent?client_id='+options.instagramId;
+      }
 
       request(feedRequestUrl, function(err, response, body){
         if (err) {
@@ -124,9 +131,23 @@ function Construct(options, callback) {
           console.log(chalk.red('[Apostrophe Instagram] ') + 'The error is', response.error);
           return callback(response.error);
         }
+
         if(response.statusCode === 200){
+          var photos = [];
           var parsedBody = JSON.parse(body);
-          photos = parsedBody.data.slice(0, limit) || [];
+          var parsedArray = parsedBody.data;
+          if(userId.length && tag.length){
+            var filteredPhotos = _.filter(parsedArray, function(photo){
+              return photo.user.id === userId;
+            });
+            photos = filteredPhotos.slice(0, limit) || [];
+          } else {
+            photos = photos.slice(0, limit) || [];
+          }
+
+
+          //console.log(photos);
+
           var results = photos.map(function(photo) {
             return {
               id: photo.id,

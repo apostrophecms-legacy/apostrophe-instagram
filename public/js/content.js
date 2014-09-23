@@ -7,7 +7,7 @@ apos.widgetPlayers.instagram = function($el) {
   $.ajax({
     dataType: "json",
     url: '/apos-instagram/photos',
-    data: {id: data.user_id, limit: data.limit},
+    data: {id: data.user_id, limit: data.limit, tag: data.hashTag},
     success: function(photos){
       //Define our photos object as well as the template and loader.
       var $photos = $el.find('[data-apos-instagram-photos]'),
@@ -30,6 +30,7 @@ apos.widgetPlayers.instagram = function($el) {
       function buildTemplate($template){
         $template.$date = $template.find('[data-apos-instagram-date]');
         $template.$image = $template.find('[data-apos-instagram-image]');
+        $template.$userName = $template.find('[data-apos-instagram-username]');
         $template.$caption = $template.find('[data-apos-instagram-caption]');
         $template.$likes = $template.find('[data-apos-instagram-likes]');
         return $template;
@@ -62,6 +63,13 @@ apos.widgetPlayers.instagram = function($el) {
             $photo.$image.attr('src', photo.image.url);
           } else {
             $photo.$image.remove();
+          }
+
+          //Add the Username
+          if(photo.user && photo.user.username){
+            $photo.$userName.html("@" + photo.user.username);
+          } else {
+            $photo.$userName.remove();
           }
 
           // Add the caption.

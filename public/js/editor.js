@@ -14,6 +14,8 @@ function AposInstagramWidgetEditor(options) {
   self.afterCreatingEl = function() {
     self.$userName = self.$el.find('[name="instagramUsername"]');
     self.$userName.val(self.data.userName);
+    self.$hashTag = self.$el.find('[name="instagramHashtag"]');
+    self.$hashTag.val(self.data.hashTag);
     self.$limit = self.$el.find('[name="instagramLimit"]');
     self.$limit.val(self.data.limit || 10);
     setTimeout(function() {
@@ -24,11 +26,17 @@ function AposInstagramWidgetEditor(options) {
 
 
   self.preSave = function(callback) {
-    self.exists = !!self.$userName.val();
+    self.exists = (!!self.$userName.val() || !!self.$hashTag.val());
     if (self.exists) {
       self.data.userName = self.$userName.val();
       self.data.limit = self.$limit.val();
-      return getUserId(self.$userName.val(), callback);
+      self.data.hashTag = self.$hashTag.val();
+      if(self.data.userName.length){
+        return getUserId(self.$userName.val(), callback);
+      } else {
+        self.data.user_id = '';
+        return callback();
+      }
     }
 
   }
