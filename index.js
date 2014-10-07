@@ -119,34 +119,29 @@ function Construct(options, callback) {
     return function(item) {
       // Now that we have the userId, let's go get some pictures.
       var feedRequestUrl;
-      if(tag.length){
-        feedRequestUrl = 'https://api.instagram.com/v1/tags/'+tag+'/media/recent?count=200&client_id='+options.instagramId;
-      } else if(userId.length && !tag.length){
+      if(tag.length > 0){
+        feedRequestUrl = 'https://api.instagram.com/v1/tags/'+tag+'/media/recent?count=100&client_id='+options.instagramId;
+      } else if(userId.length && tag.length < 1){
         feedRequestUrl = 'https://api.instagram.com/v1/users/'+userId+'/media/recent?client_id='+options.instagramId;
       }
-
       request(feedRequestUrl, function(err, response, body){
         if (err) {
           item._failed = true;
           console.log(chalk.red('[Apostrophe Instagram] ') + 'The error is', response.error);
           return callback(response.error);
         }
-
         if(response.statusCode === 200){
           var photos = [];
           var parsedBody = JSON.parse(body);
           var parsedArray = parsedBody.data;
-          if(userId.length && tag.length){
+          if(userId.length > 0 && tag.length > 0){
             var filteredPhotos = _.filter(parsedArray, function(photo){
               return photo.user.id === userId;
             });
             photos = filteredPhotos.slice(0, limit) || [];
           } else {
-            photos = photos.slice(0, limit) || [];
+            photos = parsedArray.slice(0, limit) || [];
           }
-
-
-          //console.log(photos);
 
           var results = photos.map(function(photo) {
             return {
