@@ -152,6 +152,7 @@ function Construct(options, callback) {
               date: photo.created_time,
               location: photo.location,
               likes: photo.likes,
+              link: photo.link
             }
           });
           return res.send(results);

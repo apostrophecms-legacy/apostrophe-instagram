@@ -33,6 +33,7 @@ apos.widgetPlayers.instagram = function($el) {
         $template.$userName = $template.find('[data-apos-instagram-username]');
         $template.$caption = $template.find('[data-apos-instagram-caption]');
         $template.$likes = $template.find('[data-apos-instagram-likes]');
+        $template.$link = $template.find('[data-apos-instagram-link]');
         return $template;
       }
 
@@ -91,6 +92,13 @@ apos.widgetPlayers.instagram = function($el) {
             $photo.$date.text(getInstagramDate(photo.date));
           } else {
             $photo.$caption.remove();
+          }
+
+          // Add the Link.
+          if(photo.link){
+            $photo.$link.attr('href', photo.link);
+          } else {
+            //Nothing
           }
 
           //If there's still a loader, kill it.
